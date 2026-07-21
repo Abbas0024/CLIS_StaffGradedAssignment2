@@ -1,0 +1,7 @@
+Hashing (md5sum): comparing filenames or sizes is unreliable, hashing the file contents guarantees true duplicate detection regardless of what the file is named
+
+Associative Arrays (declare -A): allows O(1) lookups in memory to check if a hash has already been processed, speeding up execution compared to writing hashes to a file and grepping them
+
+(>): overwrites the report file so previous runs don't stack up
+
+(2>> "$ERROR_LOG"): appends standard error to a separate log, this prevents permission errors or missing file warnings from the terminal output while keeping a record for debugging
