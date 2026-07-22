@@ -1,0 +1,33 @@
+Different recovery mechanisms available in vi:
+
+1. Swap Files:
+created automatically when editing begins
+stores unsaved changes periodically
+most effective when recovering work after unexpected crashes
+prevents simultaneous change conflicts
+
+2. Undo History:
+keeps track of changes made
+useful when correcting mistakes without losing recent work
+persistent undo (when configured) allows undoing changes even after reopening the file
+
+3. Registers:
+act as clipboards regarding copied and deleted text
+helpful when text is accidentally deleted or replaced
+named registers allow storing important text needed during later 
+
+4. Backup Files:
+keep the last saved version before changes have been made
+provide a safety net against accidental overwrites or corruption
+useful when editing important configuration or source files
+
+5. Auto-Recovery:
+triggered after abnormal termination like crashes or power failures
+uses the swap file to restore unsaved changes
+helps restore most unsaved work with least manual effort
+
+
+Most reliable recovery strategy:
+
+Pairing Swap File(.filename.swp) with Auto-Recovery(vi -r) is the most reliable recovery strategy
+Because swap file commits keystrokes and buffer changes to disk block periodically and without manual intervention, it survives sudden power loss or kernel panics. If and when a crash happens and the system is rebooted, simply by running "vi -r filename", vi will detect the swap file, parse the data blocks, and reconstruct the text buffer to a point where is nearly identical to the exact moments before the crash

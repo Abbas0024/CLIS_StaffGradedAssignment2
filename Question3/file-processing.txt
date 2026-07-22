@@ -1,0 +1,15 @@
+Program Logic & Design
+
+To build a secure, efficient database using low-level I/O, the file must be structured using fixed-length records. Variable-length data makes direct updating impossible without rewriting the entire file:
+
+1. open(): Create or open the file using "open()", "O_RDWR" allows both reading and writing and "0600" ensures only the owner can read/write
+
+2. write(): To add an employee, write the binary memory layout of the struct directly to disk = "write()"
+
+3. lseek(): This is core of efficient updates and retrieval, instead of reading sequentially, lseek() moves the file offset cursor to an exact byte location
+
+4. read(): Once the cursor is positioned by lseek(), read() loads that exact record into memory without parsing the rest of the file
+
+5. Updating: To update, calculate the target record's offset, use lseek() to jump there, and execute a write() to overwrite the existing fixed-length block with the modified struct
+
+6. lose(): Flushes buffers and releases the file descriptor back to the OS

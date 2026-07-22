@@ -1,0 +1,7 @@
+Process Creation (fork): parent server spins up a child to handle an incoming web request, isolating the workload
+
+Monitoring (waitpid with WNOHANG): instead of blocking the parent completely, WNOHANG allows the parent to poll the child's status, this is wrapped in a timer loop to enforce a timeout limit
+
+Signal Handling (kill): if the timer expires, the parent assumes the child is deadlocked or stuck in an infinite loop and sends SIGKILL (signal 9) to kill it
+
+Zombie Prevention: Even when forcefully killed, a process leaves a process control block (zombie) in the process table until the parent acknowledges its death, the final blocking waitpid() reaps this exit status, keeping the OS process table clean

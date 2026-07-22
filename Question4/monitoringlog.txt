@@ -1,0 +1,12 @@
+Command pipiline for a monitor tool to continuosly analyze a log file:
+tail -f /var/log/server.log 2>/dev/null | grep --line-buffered "ERROR" | tee -a error_report.log
+
+
+Explanation:
+tail -f: follows the log file in real-time, outputting new lines as the system adds them
+
+2>/dev/null (for unnecessary output): redirects standard error (like permission denied errors) to the bit bucket, ensuring the admin's terminal stays clean
+
+grep --line-buffered "ERROR": filters out routine info/debug logs, the "--line-buffered" flag is nedeed here because standard pipelines use block buffering (waiting for 4KB of data before passing it on) whereas line buffering forces grep to pass each error down the pipe immediately, maintaining true real-time visibility
+
+tee -a: takes the standard input from grep and does two things simultaneously that is it prints it to the screen (for admin's real-time view) and appends it "-a" to "error_report.log" (keeping another report)
